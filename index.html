@@ -16,10 +16,10 @@
     .invitation{width:min(1060px,100%);text-align:center;margin:auto;flex-shrink:0}.crest{width:56px;height:56px;margin-bottom:8px}
     .eyebrow{font-size:22px;letter-spacing:.35em;color:#dabc7e;margin:0 0 12px}h1{font-weight:500;letter-spacing:.12em;font-size:62px;line-height:1.2;margin:0 0 20px}
     .lead{color:#b1c7c5;font-size:var(--body-font,28px);line-height:1.65;margin:0 0 24px}.actions{display:flex;justify-content:center;gap:24px;flex-wrap:wrap}
-    button,a{font:inherit}button{min-height:var(--tap-height,110px);border:2px solid #59726e;border-radius:8px;padding:20px 44px;background:#142b33;color:#edebd8;font-size:var(--action-font,32px);cursor:pointer}
+    button,a{font:inherit}button{min-height:var(--tap-height,110px);border:3px solid #59726e;border-radius:0;padding:20px 44px;background:#142b33;color:#edebd8;font-size:var(--action-font,32px);cursor:pointer;box-shadow:4px 4px 0 #041117}
     button:hover{border-color:#f3de9f;background:#213c43}button:focus-visible,a:focus-visible{outline:4px solid #f3de9f;outline-offset:6px}
     #start{background:#dabc7e;border-color:#dabc7e;color:#11252a;min-width:370px}button:disabled{opacity:.6;cursor:wait}
-    #display-fit{position:fixed;z-index:3;top:max(12px,env(safe-area-inset-top));right:max(12px,env(safe-area-inset-right));min-height:48px;max-width:calc(100vw - max(12px,env(safe-area-inset-left)) - max(12px,env(safe-area-inset-right)));padding:10px 16px;border-width:1px;border-radius:6px;font-size:15px;line-height:1.4;touch-action:manipulation}
+    #display-fit{position:fixed;z-index:3;top:max(12px,env(safe-area-inset-top));right:max(12px,env(safe-area-inset-right));min-height:48px;max-width:calc(100vw - max(12px,env(safe-area-inset-left)) - max(12px,env(safe-area-inset-right)));padding:10px 16px;border-width:2px;border-radius:0;font-size:15px;line-height:1.4;touch-action:manipulation}
     #display-fit span,#display-fit small{display:block}#display-fit small{font-size:12px;line-height:1.4;color:#b1c7c5}
     .note{font-size:var(--body-font,25px);color:#90aaa9;line-height:1.5;margin:24px 0 0}.links{display:flex;justify-content:center;gap:40px;flex-wrap:wrap;margin-top:16px;font-size:var(--link-font,26px)}.links a{display:inline-flex;align-items:center;min-height:var(--link-height,80px);color:#dabc7e;text-decoration:none}
     .version{margin-top:16px}
@@ -47,7 +47,7 @@
       <p id="error" role="alert" hidden></p><button id="retry" type="button" hidden>重新加载</button>
       <p class="note">右上角可切换长边／短边横屏适配。<br>首次加载需要下载游戏资源。进度保存在当前浏览器。</p>
       <div class="links"><a href="https://github.com/liny0219/eight-sages-tower-play" target="_blank" rel="noopener">项目与操作说明 ↗</a><a href="https://liny0219.github.io/game-gallery/" target="_blank" rel="noopener">游戏集合 ↗</a></div>
-      <p class="note version">《八方旅人》非官方同人作品 · <span id="loader-version">v0.2.6</span></p>
+      <p class="note version">《八方旅人》非官方同人作品 · <span id="loader-version">v0.2.7</span></p>
     </div>
     </div>
   </section>
@@ -67,7 +67,7 @@
     const status = document.getElementById('status');
     const error = document.getElementById('error');
     const retry = document.getElementById('retry');
-    const GODOT_CONFIG = {"args":[],"canvasResizePolicy":0,"emscriptenPoolSize":8,"ensureCrossOriginIsolationHeaders":false,"executable":"index","experimentalVK":false,"fileSizes":{"index.pck":17842012,"index.wasm":38034280},"focusCanvas":true,"gdextensionLibs":[],"godotPoolSize":4};
+    const GODOT_CONFIG = {"args":[],"canvasResizePolicy":0,"emscriptenPoolSize":8,"ensureCrossOriginIsolationHeaders":false,"executable":"index","experimentalVK":false,"fileSizes":{"index.pck":21380564,"index.wasm":38034280},"focusCanvas":true,"gdextensionLibs":[],"godotPoolSize":4};
     const GODOT_THREADS_ENABLED = false;
     let engine = null;
     let started = false;
