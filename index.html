@@ -12,7 +12,7 @@
     #canvas{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);display:block;outline:0;touch-action:none}
     #safe-area{position:fixed;inset:0;visibility:hidden;pointer-events:none;padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)}
     #gate{position:fixed;inset:0;z-index:2;background:#07171e}
-    #gate-frame{position:absolute;left:50%;top:50%;width:1440px;height:900px;transform-origin:center;display:flex;overflow-y:auto;overscroll-behavior:contain;padding:40px 64px;background:linear-gradient(90deg,rgba(5,20,28,.97),rgba(5,20,28,.78)),url('cover.png') center/cover}
+    #gate-frame{position:absolute;left:50%;top:50%;width:1440px;height:900px;transform-origin:center;display:flex;overflow-y:auto;overscroll-behavior:contain;padding:40px 64px;background:linear-gradient(90deg,rgba(5,20,28,.97),rgba(5,20,28,.78)),url('cover.png') center/cover;image-rendering:pixelated}
     .invitation{width:min(1060px,100%);text-align:center;margin:auto;flex-shrink:0}.crest{width:56px;height:56px;margin-bottom:8px}
     .eyebrow{font-size:22px;letter-spacing:.35em;color:#dabc7e;margin:0 0 12px}h1{font-weight:500;letter-spacing:.12em;font-size:62px;line-height:1.2;margin:0 0 20px}
     .lead{color:#b1c7c5;font-size:var(--body-font,28px);line-height:1.65;margin:0 0 24px}.actions{display:flex;justify-content:center;gap:24px;flex-wrap:wrap}
@@ -47,7 +47,7 @@
       <p id="error" role="alert" hidden></p><button id="retry" type="button" hidden>重新加载</button>
       <p class="note">右上角可切换长边／短边横屏适配。<br>首次加载需要下载游戏资源。进度保存在当前浏览器。</p>
       <div class="links"><a href="https://github.com/liny0219/eight-sages-tower-play" target="_blank" rel="noopener">项目与操作说明 ↗</a><a href="https://liny0219.github.io/game-gallery/" target="_blank" rel="noopener">游戏集合 ↗</a></div>
-      <p class="note version">《八方旅人》非官方同人作品 · <span id="loader-version">v0.2.9</span></p>
+      <p class="note version">《八方旅人》非官方同人作品 · <span id="loader-version">v0.3.0</span></p>
     </div>
     </div>
   </section>
@@ -67,7 +67,7 @@
     const status = document.getElementById('status');
     const error = document.getElementById('error');
     const retry = document.getElementById('retry');
-    const GODOT_CONFIG = {"args":[],"canvasResizePolicy":0,"emscriptenPoolSize":8,"ensureCrossOriginIsolationHeaders":false,"executable":"index","experimentalVK":false,"fileSizes":{"index.pck":21705044,"index.wasm":38034280},"focusCanvas":true,"gdextensionLibs":[],"godotPoolSize":4};
+    const GODOT_CONFIG = {"args":[],"canvasResizePolicy":0,"emscriptenPoolSize":8,"ensureCrossOriginIsolationHeaders":false,"executable":"index","experimentalVK":false,"fileSizes":{"index.pck":21720968,"index.wasm":38034280},"focusCanvas":true,"gdextensionLibs":[],"godotPoolSize":4};
     const GODOT_THREADS_ENABLED = false;
     let engine = null;
     let started = false;
