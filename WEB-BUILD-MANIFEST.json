@@ -1,0 +1,74 @@
+{
+  "format": "eight-sages-tower-play/v1",
+  "version": "0.2.3",
+  "engine": "4.5.1.stable.official.f62fdbde1",
+  "single_thread": true,
+  "artifacts": {
+    "cover.png": {
+      "bytes": 2400654,
+      "sha256": "6018ecb3440f4040e7632ff93d89f99a7a59aa1a2481807536771d22012e5947"
+    },
+    "icon.png": {
+      "bytes": 23938,
+      "sha256": "e49b244112676636b2207163d231d7ba03ba6a5f3aee01b048849314f99178e5"
+    },
+    "index.apple-touch-icon.png": {
+      "bytes": 25913,
+      "sha256": "1f8ca87a2406f61c866bfe4fdab7cac54e99cc26b180bc255b0986d6453b6dab"
+    },
+    "index.audio.position.worklet.js": {
+      "bytes": 2973,
+      "sha256": "be33985bc7160d6bf9646f259cd86b259cd67b02ccb297ee5c44f8ac84327bc8"
+    },
+    "index.audio.worklet.js": {
+      "bytes": 7298,
+      "sha256": "5b476a9c9ce642c0ee4256436d1bc31d9c38f868aca0f9a8e2a57c18d2dec2a3"
+    },
+    "index.html": {
+      "bytes": 9780,
+      "sha256": "255e2a127d9df3c3175893dd058d0528e2463e097dfa21e90d5d8d874de96621"
+    },
+    "index.icon.png": {
+      "bytes": 24352,
+      "sha256": "2fa3a5a25e44219e8776158a547fc3f7267b57a32e1d778f230cc75345db29eb"
+    },
+    "index.js": {
+      "bytes": 305185,
+      "sha256": "8a7c7d57f7da69bb71da9de302480b87e4c7ecb467ce643665b4a288683cd18f"
+    },
+    "index.pck": {
+      "bytes": 52439284,
+      "sha256": "fdfa54b6ab61735b496fe95011404453a3e1df3918f7de18ebc539be0306ef27"
+    },
+    "index.png": {
+      "bytes": 21443,
+      "sha256": "3cb4495c0b98dfbe4b663cbf2b6836473572339beb66d902367893162a70be0e"
+    },
+    "index.wasm": {
+      "bytes": 38034280,
+      "sha256": "6498359ba889796a0d95a2f71113ac184badc0f2d84cf28f4103c7e399d2d547"
+    }
+  },
+  "support_files": {
+    ".nojekyll": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "LICENSE.txt": {
+      "bytes": 1229,
+      "sha256": "6e17465ad2447a05a2cf0448a90e07750be6c5b90a27e00f08255f69563bb10e"
+    },
+    "NOTICES.md": {
+      "bytes": 1384,
+      "sha256": "7dfc6bb3af5871798470d41aafc01019b7c9998a22c05eef882ddab417b7406f"
+    },
+    "NOTO-OFL.txt": {
+      "bytes": 4388,
+      "sha256": "1c05c68c34f9708415aada51f17e1b0092d2cea709bf4a94cd38114f9e73d7d9"
+    },
+    "README.md": {
+      "bytes": 1505,
+      "sha256": "868608f374602f1cf67034331f9c2597ef4a38702c4e95d1a7c6db8264190ef2"
+    }
+  }
+}

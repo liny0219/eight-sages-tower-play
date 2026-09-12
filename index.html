@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#091b22">
+  <meta name="description" content="歧路 · 八贤之塔：八方旅人世界观下的同人卡牌爬塔游戏。欧休提三职业、72张卡、32件遗物，登上莱拉主持的八贤之塔。">
+  <title>歧路 · 八贤之塔 · 在线试玩</title>
+  <style>
+    :root{color-scheme:dark;font-family:"Noto Sans SC","PingFang SC","Microsoft YaHei",sans-serif;background:#07171e;color:#f3e9d2}
+    *{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden}body{overscroll-behavior:none}
+    #canvas{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);display:block;outline:0;touch-action:none}
+    #safe-area{position:fixed;inset:0;visibility:hidden;pointer-events:none;padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)}
+    #gate{position:fixed;inset:0;z-index:2;display:flex;overflow-y:auto;padding:max(28px,env(safe-area-inset-top)) max(28px,env(safe-area-inset-right)) max(28px,env(safe-area-inset-bottom)) max(28px,env(safe-area-inset-left));background:linear-gradient(90deg,rgba(5,20,28,.97),rgba(5,20,28,.68)),url('cover.png') center/cover}
+    .invitation{width:min(660px,100%);text-align:center;margin:auto;flex-shrink:0}.crest{width:64px;height:64px;margin-bottom:20px}
+    .eyebrow{font-size:11px;letter-spacing:.35em;color:#dabc7e;margin:0 0 16px}h1{font-weight:500;letter-spacing:.12em;font-size:clamp(28px,4vw,44px);margin:0 0 18px}
+    .lead{color:#b1c7c5;font-size:15px;line-height:1.9;margin:0 0 30px}.actions{display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+    button,a{font:inherit}button{min-height:48px;border:1px solid #59726e;border-radius:5px;padding:12px 25px;background:#142b33;color:#edebd8;cursor:pointer}
+    button:hover{border-color:#f3de9f;background:#213c43}button:focus-visible,a:focus-visible{outline:2px solid #f3de9f;outline-offset:4px}
+    #start{background:#dabc7e;border-color:#dabc7e;color:#11252a;min-width:196px}button:disabled{opacity:.6;cursor:wait}
+    .note{font-size:12px;color:#90aaa9;line-height:1.8;margin:21px 0 0}.links{margin-top:24px;font-size:12px}.links a{color:#dabc7e;text-decoration:none;margin:0 12px}
+    #loading{margin:24px auto 0;max-width:420px}progress{width:100%;height:7px;accent-color:#dabc7e;display:block;margin:14px 0}
+    #status{font-size:13px;line-height:1.8;color:#d7e4db;margin:0;white-space:pre-line}#error{overflow-wrap:anywhere;color:#ffb09c;line-height:1.7;font-size:14px;margin-top:15px}
+    #retry{margin-top:14px}[hidden]{display:none!important}noscript{position:fixed;z-index:5;inset:0;display:grid;place-items:center;background:#091b22;padding:36px}
+    @media(max-height:520px){#gate{padding:max(16px,env(safe-area-inset-top)) max(16px,env(safe-area-inset-right)) max(16px,env(safe-area-inset-bottom)) max(16px,env(safe-area-inset-left))}.crest{width:40px;height:40px;margin-bottom:8px}.eyebrow{margin-bottom:8px}h1{font-size:28px;margin-bottom:10px}.lead{margin-bottom:14px;font-size:13px}.note,.links{margin-top:12px}#loading{margin-top:12px}}
+  </style>
+  <link id="-gd-engine-icon" rel="icon" type="image/png" href="index.icon.png" />
+<link rel="apple-touch-icon" href="index.apple-touch-icon.png"/>
+
+</head>
+<body>
+  <div id="safe-area" aria-hidden="true"></div>
+  <canvas id="canvas" tabindex="0" aria-label="歧路 · 八贤之塔游戏画面">浏览器需要支持 Canvas 才能游玩。</canvas>
+  <section id="gate" aria-labelledby="game-title">
+    <div class="invitation">
+      <img class="crest" src="icon.png" alt="八贤之塔徽记">
+      <p class="eyebrow">TOWER OF THE EIGHT</p>
+      <h1 id="game-title">歧路 · 八贤之塔</h1>
+      <p class="lead">每一层，都是新的歧路。每一手，都是登顶的答案。<br>带上你的本领，赴莱拉的塔顶之约。</p>
+      <div class="actions"><button id="start" type="button">开始旅程 →</button><button id="fullscreen" type="button">全屏游玩</button></div>
+      <div id="loading" hidden><progress id="progress" aria-label="游戏加载进度"></progress><p id="status" role="status" aria-live="polite">正在开启塔门…</p></div>
+      <p id="error" role="alert" hidden></p><button id="retry" type="button" hidden>重新加载</button>
+      <p class="note">画面始终沿屏幕长边展开，手机请横放游玩。<br>首次加载需要下载游戏资源。进度保存在当前浏览器。</p>
+      <div class="links"><a href="https://github.com/liny0219/eight-sages-tower-play" target="_blank" rel="noopener">项目与操作说明 ↗</a><a href="https://liny0219.github.io/game-gallery/" target="_blank" rel="noopener">游戏集合 ↗</a></div>
+      <p class="note">《八方旅人》非官方同人作品 · v0.2.3</p>
+    </div>
+  </section>
+  <noscript>请启用 JavaScript 后游玩《歧路 · 八贤之塔》。</noscript>
+  <script src="index.js"></script>
+  <script>
+    'use strict';
+    const canvas = document.getElementById('canvas');
+    const safeArea = document.getElementById('safe-area');
+    const gate = document.getElementById('gate');
+    const startButton = document.getElementById('start');
+    const fullButton = document.getElementById('fullscreen');
+    const progress = document.getElementById('progress');
+    const status = document.getElementById('status');
+    const error = document.getElementById('error');
+    const retry = document.getElementById('retry');
+    const GODOT_CONFIG = {"args":[],"canvasResizePolicy":0,"emscriptenPoolSize":8,"ensureCrossOriginIsolationHeaders":false,"executable":"index","experimentalVK":false,"fileSizes":{"index.pck":52439284,"index.wasm":38034280},"focusCanvas":true,"gdextensionLibs":[],"godotPoolSize":4};
+    const GODOT_THREADS_ENABLED = false;
+    let engine = null;
+    let started = false;
+    function fitCanvas() {
+      const safe = getComputedStyle(safeArea);
+      const left = parseFloat(safe.paddingLeft) || 0;
+      const right = parseFloat(safe.paddingRight) || 0;
+      const top = parseFloat(safe.paddingTop) || 0;
+      const bottom = parseFloat(safe.paddingBottom) || 0;
+      const availableWidth = Math.max(1, window.innerWidth - left - right);
+      const availableHeight = Math.max(1, window.innerHeight - top - bottom);
+      // Match Godot's long-edge projection. The DOM canvas stays axis-aligned,
+      // so the engine maps mouse/touch input through its own canvas transform.
+      const tall = availableHeight > availableWidth;
+      const designWidth = tall ? 900 : 1440;
+      const designHeight = tall ? 1440 : 900;
+      const scale = Math.min(availableWidth / designWidth, availableHeight / designHeight);
+      const width = Math.max(1, Math.floor(designWidth * scale));
+      const height = Math.max(1, Math.floor(designHeight * scale));
+      if (canvas.width !== width) canvas.width = width;
+      if (canvas.height !== height) canvas.height = height;
+      canvas.style.width = width + 'px';
+      canvas.style.height = height + 'px';
+      canvas.style.left = (left + availableWidth / 2) + 'px';
+      canvas.style.top = (top + availableHeight / 2) + 'px';
+    }
+    fitCanvas();
+    window.addEventListener('resize', fitCanvas);
+    document.addEventListener('fullscreenchange', fitCanvas);
+    window.eightSagesFullscreen = async function () {
+      try {
+        if (document.fullscreenElement) { await document.exitFullscreen(); return; }
+        if (document.documentElement.requestFullscreen) await document.documentElement.requestFullscreen();
+      } catch (_) { /* Long-edge presentation also works without fullscreen. */ }
+      fitCanvas();
+    };
+    function fail(reason) {
+      error.textContent = '塔门暂时未能开启。请刷新重试，或使用支持 WebGL 2 的新版 Chrome、Edge、Firefox。\n' + String(reason && reason.message || reason);
+      error.hidden = false;
+      retry.hidden = false;
+      status.textContent = '加载未完成';
+    }
+    function startGame() {
+      if (started) return;
+      started = true;
+      startButton.disabled = true;
+      fullButton.disabled = true;
+      document.getElementById('loading').hidden = false;
+      try {
+      if (typeof Engine !== 'function') { fail('引擎文件下载失败，请检查网络后重试。'); return; }
+      engine = new Engine(GODOT_CONFIG);
+      const missing = Engine.getMissingFeatures({threads:false});
+      if (missing.length) { fail('浏览器缺少：' + missing.join('、')); return; }
+      engine.startGame({
+        canvas:canvas,
+        canvasResizePolicy:0,
+        onProgress:function(current,total) {
+          if (total > 0) {
+            progress.max = total;
+            progress.value = current;
+            status.textContent = current < total ? '正在装进行囊 · ' + Math.floor(current / total * 100) + '%' : '资源已就绪，正在点亮塔灯…';
+          } else { progress.removeAttribute('value'); status.textContent = '正在装进行囊…'; }
+        }
+      }).then(function() { gate.hidden = true; canvas.focus(); fitCanvas(); }, fail);
+      } catch (reason) { fail(reason); }
+    }
+    startButton.addEventListener('click', startGame);
+    fullButton.addEventListener('click', function() { window.eightSagesFullscreen(); startGame(); });
+    retry.addEventListener('click', function() { window.location.reload(); });
+    canvas.addEventListener('contextmenu', function(event) { event.preventDefault(); });
+    if (typeof Engine !== 'function') { startButton.disabled = true; fullButton.disabled = true; fail('引擎文件下载失败，请检查网络后重试。'); }
+  </script>
+</body>
+</html>
+
