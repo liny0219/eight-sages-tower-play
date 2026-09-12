@@ -11,18 +11,19 @@
     *{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden}body{overscroll-behavior:none}
     #canvas{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);display:block;outline:0;touch-action:none}
     #safe-area{position:fixed;inset:0;visibility:hidden;pointer-events:none;padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)}
-    #gate{position:fixed;inset:0;z-index:2;display:flex;overflow-y:auto;padding:max(28px,env(safe-area-inset-top)) max(28px,env(safe-area-inset-right)) max(28px,env(safe-area-inset-bottom)) max(28px,env(safe-area-inset-left));background:linear-gradient(90deg,rgba(5,20,28,.97),rgba(5,20,28,.68)),url('cover.png') center/cover}
-    .invitation{width:min(660px,100%);text-align:center;margin:auto;flex-shrink:0}.crest{width:64px;height:64px;margin-bottom:20px}
-    .eyebrow{font-size:11px;letter-spacing:.35em;color:#dabc7e;margin:0 0 16px}h1{font-weight:500;letter-spacing:.12em;font-size:clamp(28px,4vw,44px);margin:0 0 18px}
-    .lead{color:#b1c7c5;font-size:15px;line-height:1.9;margin:0 0 30px}.actions{display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
-    button,a{font:inherit}button{min-height:48px;border:1px solid #59726e;border-radius:5px;padding:12px 25px;background:#142b33;color:#edebd8;cursor:pointer}
-    button:hover{border-color:#f3de9f;background:#213c43}button:focus-visible,a:focus-visible{outline:2px solid #f3de9f;outline-offset:4px}
-    #start{background:#dabc7e;border-color:#dabc7e;color:#11252a;min-width:196px}button:disabled{opacity:.6;cursor:wait}
-    .note{font-size:12px;color:#90aaa9;line-height:1.8;margin:21px 0 0}.links{margin-top:24px;font-size:12px}.links a{color:#dabc7e;text-decoration:none;margin:0 12px}
-    #loading{margin:24px auto 0;max-width:420px}progress{width:100%;height:7px;accent-color:#dabc7e;display:block;margin:14px 0}
-    #status{font-size:13px;line-height:1.8;color:#d7e4db;margin:0;white-space:pre-line}#error{overflow-wrap:anywhere;color:#ffb09c;line-height:1.7;font-size:14px;margin-top:15px}
-    #retry{margin-top:14px}[hidden]{display:none!important}noscript{position:fixed;z-index:5;inset:0;display:grid;place-items:center;background:#091b22;padding:36px}
-    @media(max-height:520px){#gate{padding:max(16px,env(safe-area-inset-top)) max(16px,env(safe-area-inset-right)) max(16px,env(safe-area-inset-bottom)) max(16px,env(safe-area-inset-left))}.crest{width:40px;height:40px;margin-bottom:8px}.eyebrow{margin-bottom:8px}h1{font-size:28px;margin-bottom:10px}.lead{margin-bottom:14px;font-size:13px}.note,.links{margin-top:12px}#loading{margin-top:12px}}
+    #gate{position:fixed;inset:0;z-index:2;background:#07171e}
+    #gate-frame{position:absolute;left:50%;top:50%;width:1440px;height:900px;transform-origin:center;display:flex;overflow-y:auto;overscroll-behavior:contain;padding:40px 64px;background:linear-gradient(90deg,rgba(5,20,28,.97),rgba(5,20,28,.78)),url('cover.png') center/cover}
+    .invitation{width:min(1060px,100%);text-align:center;margin:auto;flex-shrink:0}.crest{width:56px;height:56px;margin-bottom:8px}
+    .eyebrow{font-size:22px;letter-spacing:.35em;color:#dabc7e;margin:0 0 12px}h1{font-weight:500;letter-spacing:.12em;font-size:62px;line-height:1.2;margin:0 0 20px}
+    .lead{color:#b1c7c5;font-size:28px;line-height:1.65;margin:0 0 24px}.actions{display:flex;justify-content:center;gap:24px;flex-wrap:wrap}
+    button,a{font:inherit}button{min-height:110px;border:2px solid #59726e;border-radius:8px;padding:20px 44px;background:#142b33;color:#edebd8;font-size:32px;cursor:pointer}
+    button:hover{border-color:#f3de9f;background:#213c43}button:focus-visible,a:focus-visible{outline:4px solid #f3de9f;outline-offset:6px}
+    #start{background:#dabc7e;border-color:#dabc7e;color:#11252a;min-width:370px}button:disabled{opacity:.6;cursor:wait}
+    .note{font-size:25px;color:#90aaa9;line-height:1.5;margin:24px 0 0}.links{display:flex;justify-content:center;gap:40px;flex-wrap:wrap;margin-top:16px;font-size:26px}.links a{display:inline-flex;align-items:center;min-height:80px;color:#dabc7e;text-decoration:none}
+    .version{margin-top:16px;font-size:24px}
+    #loading{margin:20px auto 0;max-width:800px}progress{width:100%;height:12px;accent-color:#dabc7e;display:block;margin:16px 0}
+    #status{font-size:28px;line-height:1.5;color:#d7e4db;margin:0;white-space:pre-line}#error{overflow-wrap:anywhere;color:#ffb09c;line-height:1.6;font-size:28px;margin-top:20px}
+    #retry{margin-top:20px}[hidden]{display:none!important}noscript{position:fixed;z-index:5;inset:0;display:grid;place-items:center;background:#091b22;padding:36px}
   </style>
   <link id="-gd-engine-icon" rel="icon" type="image/png" href="index.icon.png" />
 <link rel="apple-touch-icon" href="index.apple-touch-icon.png"/>
@@ -32,6 +33,7 @@
   <div id="safe-area" aria-hidden="true"></div>
   <canvas id="canvas" tabindex="0" aria-label="歧路 · 八贤之塔游戏画面">浏览器需要支持 Canvas 才能游玩。</canvas>
   <section id="gate" aria-labelledby="game-title">
+    <div id="gate-frame">
     <div class="invitation">
       <img class="crest" src="icon.png" alt="八贤之塔徽记">
       <p class="eyebrow">TOWER OF THE EIGHT</p>
@@ -42,7 +44,8 @@
       <p id="error" role="alert" hidden></p><button id="retry" type="button" hidden>重新加载</button>
       <p class="note">画面始终沿屏幕长边展开，手机请横放游玩。<br>首次加载需要下载游戏资源。进度保存在当前浏览器。</p>
       <div class="links"><a href="https://github.com/liny0219/eight-sages-tower-play" target="_blank" rel="noopener">项目与操作说明 ↗</a><a href="https://liny0219.github.io/game-gallery/" target="_blank" rel="noopener">游戏集合 ↗</a></div>
-      <p class="note">《八方旅人》非官方同人作品 · v0.2.3</p>
+      <p class="note version">《八方旅人》非官方同人作品 · v0.2.4</p>
+    </div>
     </div>
   </section>
   <noscript>请启用 JavaScript 后游玩《歧路 · 八贤之塔》。</noscript>
@@ -52,16 +55,27 @@
     const canvas = document.getElementById('canvas');
     const safeArea = document.getElementById('safe-area');
     const gate = document.getElementById('gate');
+    const gateFrame = document.getElementById('gate-frame');
     const startButton = document.getElementById('start');
     const fullButton = document.getElementById('fullscreen');
     const progress = document.getElementById('progress');
     const status = document.getElementById('status');
     const error = document.getElementById('error');
     const retry = document.getElementById('retry');
-    const GODOT_CONFIG = {"args":[],"canvasResizePolicy":0,"emscriptenPoolSize":8,"ensureCrossOriginIsolationHeaders":false,"executable":"index","experimentalVK":false,"fileSizes":{"index.pck":52439284,"index.wasm":38034280},"focusCanvas":true,"gdextensionLibs":[],"godotPoolSize":4};
+    const GODOT_CONFIG = {"args":[],"canvasResizePolicy":0,"emscriptenPoolSize":8,"ensureCrossOriginIsolationHeaders":false,"executable":"index","experimentalVK":false,"fileSizes":{"index.pck":17736928,"index.wasm":38034280},"focusCanvas":true,"gdextensionLibs":[],"godotPoolSize":4};
     const GODOT_THREADS_ENABLED = false;
     let engine = null;
     let started = false;
+    const DISPLAY_FLIPPED_KEY = 'eight_sages_display_flipped';
+    let displayFlipped = false;
+    try { displayFlipped = window.localStorage.getItem(DISPLAY_FLIPPED_KEY) === '1'; } catch (_) { /* This tab still supports the preference without storage. */ }
+    window.eightSagesDisplayFlipped = function () { return displayFlipped; };
+    window.eightSagesSetDisplayFlipped = function (value) {
+      displayFlipped = Boolean(value);
+      try { window.localStorage.setItem(DISPLAY_FLIPPED_KEY, displayFlipped ? '1' : '0'); } catch (_) { /* Retain the in-memory value when storage is unavailable. */ }
+      fitCanvas();
+      return displayFlipped;
+    };
     function fitCanvas() {
       const safe = getComputedStyle(safeArea);
       const left = parseFloat(safe.paddingLeft) || 0;
@@ -84,6 +98,12 @@
       canvas.style.height = height + 'px';
       canvas.style.left = (left + availableWidth / 2) + 'px';
       canvas.style.top = (top + availableHeight / 2) + 'px';
+      // Only the loading overlay rotates. The game canvas remains axis-aligned
+      // and uses the same preference through Godot's root-canvas projection.
+      const angle = tall ? (displayFlipped ? -90 : 90) : (displayFlipped ? 180 : 0);
+      gateFrame.style.left = canvas.style.left;
+      gateFrame.style.top = canvas.style.top;
+      gateFrame.style.transform = 'translate(-50%, -50%) rotate(' + angle + 'deg) scale(' + scale + ')';
     }
     fitCanvas();
     window.addEventListener('resize', fitCanvas);
