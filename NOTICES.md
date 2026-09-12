@@ -12,4 +12,6 @@
 
 像素精灵的公开存档来源（原图未经像素修改，以固定图集选区显示）：
 - [欧休提](https://www.spriters-resource.com/mobile/octopathtravelerchampionsofthecontinent/asset/232738/) 与 [莱拉 / Isla](https://www.spriters-resource.com/mobile/octopathtravelerchampionsofthecontinent/asset/233414/)，存档上传者 laceelincia。
+- [欧休提 EX](https://www.spriters-resource.com/mobile/octopathtravelerchampionsofthecontinent/asset/474187/)，存档上传者 Winmillion21；本作剑士分支采用其发明家装束。动作阶段与时长为本项目编排。
+- [Octopath Traveler II 欧休提职业图集](https://www.spriters-resource.com/pc_computer/octopathtravelerii/asset/265696/)，存档上传者 Dark_Ansem；使用 KarJ002 的原始待机及战斗图集呈现同人药师分支。此分支不是已发布的 CotC 欧休提 EX 职业。
 - [狼](https://www.spriters-resource.com/pc_computer/octopathtravelerzero/asset/528299/)、[兽径守卫参考](https://www.spriters-resource.com/pc_computer/octopathtravelerzero/asset/528300/)、[人面蝶](https://www.spriters-resource.com/pc_computer/octopathtravelerzero/asset/528227/)、[野猪](https://www.spriters-resource.com/pc_computer/octopathtravelerzero/asset/528224/) 与 [双龙](https://www.spriters-resource.com/pc_computer/octopathtravelerzero/asset/528238/)。这些是原作素材，游戏内名称、数值及试炼组合为同人设计。
