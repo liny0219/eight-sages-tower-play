@@ -47,7 +47,7 @@
       <p id="error" role="alert" hidden></p><button id="retry" type="button" hidden>重新加载</button>
       <p class="note">右上角可切换长边／短边横屏适配。<br>首次加载需要下载游戏资源。进度保存在当前浏览器。</p>
       <div class="links"><a href="https://github.com/liny0219/eight-sages-tower-play" target="_blank" rel="noopener">项目与操作说明 ↗</a><a href="https://liny0219.github.io/game-gallery/" target="_blank" rel="noopener">游戏集合 ↗</a></div>
-      <p class="note version">《八方旅人》非官方同人作品 · <span id="loader-version">v0.3.5</span></p>
+      <p class="note version">《八方旅人》非官方同人作品 · <span id="loader-version">v0.3.6</span></p>
       <p class="note" id="playtest-note" hidden>独立试玩 · 进度单独保存</p>
     </div>
     </div>
@@ -68,7 +68,7 @@
     const status = document.getElementById('status');
     const error = document.getElementById('error');
     const retry = document.getElementById('retry');
-    const GODOT_CONFIG = {"args":[],"canvasResizePolicy":0,"emscriptenPoolSize":8,"ensureCrossOriginIsolationHeaders":false,"executable":"index","experimentalVK":false,"fileSizes":{"index.pck":44420632,"index.wasm":38034280},"focusCanvas":true,"gdextensionLibs":[],"godotPoolSize":4};
+    const GODOT_CONFIG = {"args":[],"canvasResizePolicy":0,"emscriptenPoolSize":8,"ensureCrossOriginIsolationHeaders":false,"executable":"index","experimentalVK":false,"fileSizes":{"index.pck":44541508,"index.wasm":38034280},"focusCanvas":true,"gdextensionLibs":[],"godotPoolSize":4};
     const GODOT_THREADS_ENABLED = false;
     // A separate save profile lets the shipped game be played and reloaded
     // during acceptance without reading or replacing a normal journey.
@@ -169,10 +169,7 @@
       document.getElementById('loading').hidden = false;
       try {
       if (typeof Engine !== 'function') { fail('引擎文件下载失败，请检查网络后重试。'); return; }
-      engine = new Engine(GODOT_CONFIG);
-      const missing = Engine.getMissingFeatures({threads:false});
-      if (missing.length) { fail('浏览器缺少：' + missing.join('、')); return; }
-      engine.startGame({
+      const runtimeConfig = Object.assign({}, GODOT_CONFIG, {
         args:PLAYTEST ? ['--','--playtest'] : [],
         canvas:canvas,
         canvasResizePolicy:0,
@@ -183,6 +180,21 @@
             status.textContent = current < total ? '正在装进行囊 · ' + Math.floor(current / total * 100) + '%' : '资源已就绪，正在点亮塔灯…';
           } else { progress.removeAttribute('value'); status.textContent = '正在装进行囊…'; }
         }
+      });
+      engine = new Engine(runtimeConfig);
+      const missing = Engine.getMissingFeatures({threads:false});
+      if (missing.length) { fail('浏览器缺少：' + missing.join('、')); return; }
+      const executable = runtimeConfig.executable;
+      const mainPack = runtimeConfig.mainPack || executable + '.pck';
+      Promise.all([
+        engine.init(executable),
+        engine.preloadFile(mainPack,mainPack)
+      ]).then(function() {
+        // Engine initialization can touch the canvas before Godot starts. With
+        // resize policy 0, Godot snapshots the current buffer in callMain, so
+        // restore the browser-owned size after init and before start.
+        fitCanvas();
+        return engine.start({args:['--main-pack',mainPack].concat(runtimeConfig.args)});
       }).then(function() {
         // Initialization may have touched buffer dimensions while resources
         // loaded. Apply the latest selection before revealing the game.
