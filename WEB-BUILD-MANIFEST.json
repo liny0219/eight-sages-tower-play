@@ -1,6 +1,6 @@
 {
   "format": "eight-sages-tower-play/v1",
-  "version": "0.3.7",
+  "version": "0.3.8",
   "engine": "4.5.1.stable.official.f62fdbde1",
   "single_thread": true,
   "artifacts": {
@@ -26,7 +26,7 @@
     },
     "index.html": {
       "bytes": 15305,
-      "sha256": "3964a1d8496464a1395cc37eb57d8843df3a249663896ffa2e44ed6a21198795"
+      "sha256": "954862cdb432f3b837642cf84248463359a67d28670e41d7da9bdbde7687a4f0"
     },
     "index.icon.png": {
       "bytes": 24352,
@@ -37,8 +37,8 @@
       "sha256": "8a7c7d57f7da69bb71da9de302480b87e4c7ecb467ce643665b4a288683cd18f"
     },
     "index.pck": {
-      "bytes": 44607444,
-      "sha256": "ed7d8abb62eec226c2a3d7f65e5e51a2b86d699ce9f52ef7dfc8e51ab2634983"
+      "bytes": 44633604,
+      "sha256": "a55c6131be2b6ca5210fbe6580bf4e442cfa356d5d2ad97700f5d81e925939e7"
     },
     "index.png": {
       "bytes": 21443,
@@ -68,7 +68,7 @@
     },
     "README.md": {
       "bytes": 1955,
-      "sha256": "674a957f8cea8fe7141a3fef29e9a26079fae7848d9ba30be719d8f9fd2c7be2"
+      "sha256": "f0ab0d0caf8cdd887d554f7f34ac0704c1e3ef5e98abdb70f9c060553014bd61"
     }
   }
 }
