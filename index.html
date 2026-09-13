@@ -47,7 +47,7 @@
       <p id="error" role="alert" hidden></p><button id="retry" type="button" hidden>重新加载</button>
       <p class="note">右上角可切换长边／短边横屏适配。<br>首次加载需要下载游戏资源。进度保存在当前浏览器。</p>
       <div class="links"><a href="https://github.com/liny0219/eight-sages-tower-play" target="_blank" rel="noopener">项目与操作说明 ↗</a><a href="https://liny0219.github.io/game-gallery/" target="_blank" rel="noopener">游戏集合 ↗</a></div>
-      <p class="note version">《八方旅人》非官方同人作品 · <span id="loader-version">v0.3.0</span></p>
+      <p class="note version">《八方旅人》非官方同人作品 · <span id="loader-version">v0.3.1</span></p>
     </div>
     </div>
   </section>
@@ -67,10 +67,14 @@
     const status = document.getElementById('status');
     const error = document.getElementById('error');
     const retry = document.getElementById('retry');
-    const GODOT_CONFIG = {"args":[],"canvasResizePolicy":0,"emscriptenPoolSize":8,"ensureCrossOriginIsolationHeaders":false,"executable":"index","experimentalVK":false,"fileSizes":{"index.pck":21720968,"index.wasm":38034280},"focusCanvas":true,"gdextensionLibs":[],"godotPoolSize":4};
+    const GODOT_CONFIG = {"args":[],"canvasResizePolicy":0,"emscriptenPoolSize":8,"ensureCrossOriginIsolationHeaders":false,"executable":"index","experimentalVK":false,"fileSizes":{"index.pck":24141284,"index.wasm":38034280},"focusCanvas":true,"gdextensionLibs":[],"godotPoolSize":4};
     const GODOT_THREADS_ENABLED = false;
     let engine = null;
     let started = false;
+    // CSS dimensions control reading/touch density; the backing buffer follows
+    // physical pixels. Keep this object stable for Godot's JavaScriptBridge.
+    const canvasMetrics = {cssWidth:1, cssHeight:1, pixelRatio:1};
+    window.eightSagesCanvasMetrics = canvasMetrics;
     const DISPLAY_FIT_KEY = 'eight_sages_display_fit';
     let displayFit = 'long';
     try { displayFit = window.localStorage.getItem(DISPLAY_FIT_KEY) === 'short' ? 'short' : 'long'; } catch (_) { /* This tab still supports the preference without storage. */ }
@@ -97,8 +101,17 @@
       const scale = Math.min(availableWidth / designWidth, availableHeight / designHeight);
       const width = Math.max(1, Math.floor(designWidth * scale));
       const height = Math.max(1, Math.floor(designHeight * scale));
-      if (canvas.width !== width) canvas.width = width;
-      if (canvas.height !== height) canvas.height = height;
+      const requestedRatio = Math.max(1, window.devicePixelRatio || 1);
+      // Preserve normal Retina/phone DPR (including 3x). Bound only very large
+      // surfaces to 16 megapixels / 8192 per edge to avoid runaway allocation.
+      const pixelRatio = Math.min(requestedRatio, 8192 / Math.max(width, height), Math.sqrt(16777216 / (width * height)));
+      const bufferWidth = Math.max(1, Math.round(width * pixelRatio));
+      const bufferHeight = Math.max(1, Math.round(height * pixelRatio));
+      if (canvas.width !== bufferWidth) canvas.width = bufferWidth;
+      if (canvas.height !== bufferHeight) canvas.height = bufferHeight;
+      canvasMetrics.cssWidth = width;
+      canvasMetrics.cssHeight = height;
+      canvasMetrics.pixelRatio = pixelRatio;
       canvas.style.width = width + 'px';
       canvas.style.height = height + 'px';
       canvas.style.left = (left + availableWidth / 2) + 'px';
@@ -122,6 +135,14 @@
     fitCanvas();
     window.addEventListener('resize', fitCanvas);
     document.addEventListener('fullscreenchange', fitCanvas);
+    // Moving between displays or browser zoom can change DPR without changing
+    // the CSS box. Re-arm the query after each density change.
+    function watchPixelRatio() {
+      if (!window.matchMedia) return;
+      const query = window.matchMedia('(resolution: ' + (window.devicePixelRatio || 1) + 'dppx)');
+      query.addEventListener('change', function () { fitCanvas(); watchPixelRatio(); }, {once:true});
+    }
+    watchPixelRatio();
     window.eightSagesFullscreen = async function () {
       try {
         if (document.fullscreenElement) { await document.exitFullscreen(); return; }
