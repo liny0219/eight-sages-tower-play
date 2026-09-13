@@ -12,15 +12,15 @@
     #canvas{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);display:block;outline:0;touch-action:none}
     #safe-area{position:fixed;inset:0;visibility:hidden;pointer-events:none;padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)}
     #gate{position:fixed;inset:0;z-index:2;background:#07171e}
-    #gate-frame{position:absolute;left:50%;top:50%;width:1440px;height:900px;transform-origin:center;display:flex;overflow-y:auto;overscroll-behavior:contain;padding:40px 64px;background:linear-gradient(90deg,rgba(5,20,28,.97),rgba(5,20,28,.78)),url('cover.png') center/cover;image-rendering:pixelated}
+    #gate-frame{position:absolute;left:50%;top:50%;width:1440px;height:900px;transform-origin:center;display:flex;flex-direction:column;overflow-y:auto;overscroll-behavior:contain;padding:40px 64px;background:linear-gradient(90deg,rgba(5,20,28,.97),rgba(5,20,28,.78)),url('cover.png') center/cover;image-rendering:pixelated}
     .invitation{width:min(1060px,100%);text-align:center;margin:auto;flex-shrink:0}.crest{width:56px;height:56px;margin-bottom:8px}
     .eyebrow{font-size:22px;letter-spacing:.35em;color:#dabc7e;margin:0 0 12px}h1{font-weight:500;letter-spacing:.12em;font-size:62px;line-height:1.2;margin:0 0 20px}
     .lead{color:#b1c7c5;font-size:var(--body-font,28px);line-height:1.65;margin:0 0 24px}.actions{display:flex;justify-content:center;gap:24px;flex-wrap:wrap}
     button,a{font:inherit}button{min-height:var(--tap-height,110px);border:3px solid #59726e;border-radius:0;padding:20px 44px;background:#142b33;color:#edebd8;font-size:var(--action-font,32px);cursor:pointer;box-shadow:4px 4px 0 #041117}
     button:hover{border-color:#f3de9f;background:#213c43}button:focus-visible,a:focus-visible{outline:4px solid #f3de9f;outline-offset:6px}
     #start{background:#dabc7e;border-color:#dabc7e;color:#11252a;min-width:370px}button:disabled{opacity:.6;cursor:wait}
-    #display-fit{position:fixed;z-index:3;top:max(12px,env(safe-area-inset-top));right:max(12px,env(safe-area-inset-right));min-height:48px;max-width:calc(100vw - max(12px,env(safe-area-inset-left)) - max(12px,env(safe-area-inset-right)));padding:10px 16px;border-width:2px;border-radius:0;font-size:15px;line-height:1.4;touch-action:manipulation}
-    #display-fit span,#display-fit small{display:block}#display-fit small{font-size:12px;line-height:1.4;color:#b1c7c5}
+    #display-fit{position:relative;z-index:3;align-self:flex-end;flex:0 0 auto;min-height:var(--fit-height,48px);max-width:100%;padding:var(--fit-padding-y,10px) var(--fit-padding-x,16px);border-width:2px;border-radius:0;font-size:var(--fit-font,15px);line-height:1.4;touch-action:manipulation}
+    #display-fit span,#display-fit small{display:block}#display-fit small{font-size:var(--fit-small-font,12px);line-height:1.4;color:#b1c7c5}
     .note{font-size:var(--body-font,25px);color:#90aaa9;line-height:1.5;margin:24px 0 0}.links{display:flex;justify-content:center;gap:40px;flex-wrap:wrap;margin-top:16px;font-size:var(--link-font,26px)}.links a{display:inline-flex;align-items:center;min-height:var(--link-height,80px);color:#dabc7e;text-decoration:none}
     .version{margin-top:16px}
     #loading{margin:20px auto 0;max-width:800px}progress{width:100%;height:12px;accent-color:#dabc7e;display:block;margin:16px 0}
@@ -35,8 +35,8 @@
   <div id="safe-area" aria-hidden="true"></div>
   <canvas id="canvas" tabindex="0" aria-label="歧路 · 八贤之塔游戏画面">浏览器需要支持 Canvas 才能游玩。</canvas>
   <section id="gate" aria-labelledby="game-title">
-    <button id="display-fit" type="button" aria-pressed="false"><span>旋转画面</span><small id="display-fit-mode">当前：长边横屏</small></button>
     <div id="gate-frame">
+    <button id="display-fit" type="button" aria-pressed="false"><span>旋转画面</span><small id="display-fit-mode">当前：长边横屏</small></button>
     <div class="invitation">
       <img class="crest" src="icon.png" alt="八贤之塔徽记">
       <p class="eyebrow">TOWER OF THE EIGHT</p>
@@ -47,7 +47,7 @@
       <p id="error" role="alert" hidden></p><button id="retry" type="button" hidden>重新加载</button>
       <p class="note">右上角可切换长边／短边横屏适配。<br>首次加载需要下载游戏资源。进度保存在当前浏览器。</p>
       <div class="links"><a href="https://github.com/liny0219/eight-sages-tower-play" target="_blank" rel="noopener">项目与操作说明 ↗</a><a href="https://liny0219.github.io/game-gallery/" target="_blank" rel="noopener">游戏集合 ↗</a></div>
-      <p class="note version">《八方旅人》非官方同人作品 · <span id="loader-version">v0.3.9</span></p>
+      <p class="note version">《八方旅人》非官方同人作品 · <span id="loader-version">v0.4.0</span></p>
       <p class="note" id="playtest-note" hidden>独立试玩 · 进度单独保存</p>
     </div>
     </div>
@@ -68,7 +68,7 @@
     const status = document.getElementById('status');
     const error = document.getElementById('error');
     const retry = document.getElementById('retry');
-    const GODOT_CONFIG = {"args":[],"canvasResizePolicy":0,"emscriptenPoolSize":8,"ensureCrossOriginIsolationHeaders":false,"executable":"index","experimentalVK":false,"fileSizes":{"index.pck":44911392,"index.wasm":38034280},"focusCanvas":true,"gdextensionLibs":[],"godotPoolSize":4};
+    const GODOT_CONFIG = {"args":[],"canvasResizePolicy":0,"emscriptenPoolSize":8,"ensureCrossOriginIsolationHeaders":false,"executable":"index","experimentalVK":false,"fileSizes":{"index.pck":44924680,"index.wasm":38034280},"focusCanvas":true,"gdextensionLibs":[],"godotPoolSize":4};
     const GODOT_THREADS_ENABLED = false;
     // A separate save profile lets the shipped game be played and reloaded
     // during acceptance without reading or replacing a normal journey.
@@ -133,6 +133,13 @@
       gateFrame.style.setProperty('--body-font',Math.max(28,14/scale) + 'px');
       gateFrame.style.setProperty('--link-height',Math.max(80,44/scale) + 'px');
       gateFrame.style.setProperty('--link-font',Math.max(26,13/scale) + 'px');
+      // This control participates in the loader's flow, so it reserves space
+      // instead of covering the title. Its projected touch box stays physical.
+      gateFrame.style.setProperty('--fit-height',Math.max(48,48/scale) + 'px');
+      gateFrame.style.setProperty('--fit-padding-y',Math.max(10,10/scale) + 'px');
+      gateFrame.style.setProperty('--fit-padding-x',Math.max(16,16/scale) + 'px');
+      gateFrame.style.setProperty('--fit-font',Math.max(15,15/scale) + 'px');
+      gateFrame.style.setProperty('--fit-small-font',Math.max(12,12/scale) + 'px');
       fitMode.textContent = displayFit === 'short' ? '当前：短边横屏' : '当前：长边横屏';
       fitButton.setAttribute('aria-label','旋转画面，' + fitMode.textContent + '；切换' + (displayFit === 'short' ? '长边' : '短边') + '横屏');
       fitButton.setAttribute('aria-pressed',String(displayFit === 'short'));
