@@ -47,7 +47,8 @@
       <p id="error" role="alert" hidden></p><button id="retry" type="button" hidden>重新加载</button>
       <p class="note">右上角可切换长边／短边横屏适配。<br>首次加载需要下载游戏资源。进度保存在当前浏览器。</p>
       <div class="links"><a href="https://github.com/liny0219/eight-sages-tower-play" target="_blank" rel="noopener">项目与操作说明 ↗</a><a href="https://liny0219.github.io/game-gallery/" target="_blank" rel="noopener">游戏集合 ↗</a></div>
-      <p class="note version">《八方旅人》非官方同人作品 · <span id="loader-version">v0.3.2</span></p>
+      <p class="note version">《八方旅人》非官方同人作品 · <span id="loader-version">v0.3.3</span></p>
+      <p class="note" id="playtest-note" hidden>独立试玩 · 进度单独保存</p>
     </div>
     </div>
   </section>
@@ -67,15 +68,19 @@
     const status = document.getElementById('status');
     const error = document.getElementById('error');
     const retry = document.getElementById('retry');
-    const GODOT_CONFIG = {"args":[],"canvasResizePolicy":0,"emscriptenPoolSize":8,"ensureCrossOriginIsolationHeaders":false,"executable":"index","experimentalVK":false,"fileSizes":{"index.pck":28963036,"index.wasm":38034280},"focusCanvas":true,"gdextensionLibs":[],"godotPoolSize":4};
+    const GODOT_CONFIG = {"args":[],"canvasResizePolicy":0,"emscriptenPoolSize":8,"ensureCrossOriginIsolationHeaders":false,"executable":"index","experimentalVK":false,"fileSizes":{"index.pck":44423804,"index.wasm":38034280},"focusCanvas":true,"gdextensionLibs":[],"godotPoolSize":4};
     const GODOT_THREADS_ENABLED = false;
+    // A separate save profile lets the shipped game be played and reloaded
+    // during acceptance without reading or replacing a normal journey.
+    const PLAYTEST = new URLSearchParams(window.location.search).get('playtest') === '1';
+    document.getElementById('playtest-note').hidden = !PLAYTEST;
     let engine = null;
     let started = false;
     // CSS dimensions control reading/touch density; the backing buffer follows
     // physical pixels. Keep this object stable for Godot's JavaScriptBridge.
     const canvasMetrics = {cssWidth:1, cssHeight:1, pixelRatio:1};
     window.eightSagesCanvasMetrics = canvasMetrics;
-    const DISPLAY_FIT_KEY = 'eight_sages_display_fit';
+    const DISPLAY_FIT_KEY = PLAYTEST ? 'eight_sages_playtest_display_fit' : 'eight_sages_display_fit';
     let displayFit = 'long';
     try { displayFit = window.localStorage.getItem(DISPLAY_FIT_KEY) === 'short' ? 'short' : 'long'; } catch (_) { /* This tab still supports the preference without storage. */ }
     window.eightSagesDisplayFit = function () { return displayFit; };
@@ -168,6 +173,7 @@
       const missing = Engine.getMissingFeatures({threads:false});
       if (missing.length) { fail('浏览器缺少：' + missing.join('、')); return; }
       engine.startGame({
+        args:PLAYTEST ? ['--','--playtest'] : [],
         canvas:canvas,
         canvasResizePolicy:0,
         onProgress:function(current,total) {
