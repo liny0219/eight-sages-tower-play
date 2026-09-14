@@ -5,6 +5,7 @@
 - 原创程序：Copyright (c) 2026 liny0219；既有 MIT 许可全文随 [LICENSE.txt](LICENSE.txt) 分发。此许可不重新授权第三方角色、商标、世界观、字体或同人绘画涉及的原作权利。
 - 美术：场景与部分同人卡面、魔物由图像生成工具创作；图标与界面包含原创几何绘制。像素精灵还使用公开存档的《歧路旅人》系列原作角色与魔物素材，权利归原权利人，来源为 The Spriters Resource；它们不是本项目原创或 CC0 资产。生成和公开存档均不意味着已取得原作 IP 授权。
 - 音频：本项目合成的原创音符与振荡器音效，无外部采样。
+- 首页欧休提插画：[SQUARE ENIX《八方旅人 II》官方角色页](https://www.jp.square-enix.com/octopathtraveler2/traveler/ochette.html)的夜间插画，权利归原权利人；并非本项目原创、开放许可素材或已获官方授权的内容。
 - 字体：Noto Sans SC，SIL Open Font License 1.1。完整版权声明与许可见 [NOTO-OFL.txt](NOTO-OFL.txt)。
 - 引擎：Godot Engine 4.5.1。Copyright (c) 2014-present Godot Engine contributors; Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur。MIT 许可及引擎第三方组件说明见 [Godot 官方许可页](https://godotengine.org/license/)；组件版权清单见 [Godot 4.5.1 COPYRIGHT.txt](https://github.com/godotengine/godot/blob/4.5.1-stable/COPYRIGHT.txt)。
 
